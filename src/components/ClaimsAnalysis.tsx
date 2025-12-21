@@ -14,8 +14,11 @@ interface ClaimsData {
 }
 
 interface ClaimsAnalysisProps {
+  departmentSlug: string;
+  departmentName: string;
   onNotification: (message: string, type: 'info' | 'success' | 'warning' | 'error', from?: string) => void;
   currentUser: string;
+  teamMembers?: any[];
 }
 
 const INSURERS = ['Kenya', 'Tanzania', 'Uganda', 'UAP Old Mutual', 'Leadway Assurance', 'AXA Mansard', 'AIICO Insurance', 'Hadiel Tech'];
@@ -31,7 +34,7 @@ const INITIAL_CLAIMS_DATA: ClaimsData[] = [
   { id: '8', insurer: 'Hadiel Tech', month: 'January', year: 2025, claimsReceived: 320, claimsProcessed: 315, averageProcessingTime: 11, volumeGrowth: 45.8 },
 ];
 
-const ClaimsAnalysis: React.FC<ClaimsAnalysisProps> = ({ onNotification, currentUser }) => {
+const ClaimsAnalysis: React.FC<ClaimsAnalysisProps> = ({ departmentSlug, departmentName, onNotification, currentUser, teamMembers }) => {
   const [claimsData, setClaimsData] = useState<ClaimsData[]>(INITIAL_CLAIMS_DATA);
   const [filteredData, setFilteredData] = useState<ClaimsData[]>(INITIAL_CLAIMS_DATA);
   const [selectedInsurer, setSelectedInsurer] = useState('All Insurers');

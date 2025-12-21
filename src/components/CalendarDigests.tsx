@@ -27,12 +27,14 @@ interface EmailDigest {
 }
 
 interface CalendarDigestsProps {
+  departmentSlug: string;
+  departmentName: string;
   onNotification: (message: string, type: 'info' | 'success' | 'warning' | 'error') => void;
   currentUser: string;
   teamMembers: Array<{ id: string; name: string; role: string; avatar: string }>;
 }
 
-const CalendarDigests: React.FC<CalendarDigestsProps> = ({ onNotification, currentUser, teamMembers }) => {
+const CalendarDigests: React.FC<CalendarDigestsProps> = ({ departmentSlug, departmentName, onNotification, currentUser, teamMembers }) => {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [digests, setDigests] = useState<EmailDigest[]>([]);
   const [selectedTab, setSelectedTab] = useState<'calendar' | 'digests'>('calendar');

@@ -33,12 +33,14 @@ interface Prediction {
 }
 
 interface SmartAnalyticsProps {
+  departmentSlug: string;
+  departmentName: string;
   onNotification: (message: string, type: 'info' | 'success' | 'warning' | 'error') => void;
   currentUser: string;
   teamMembers: Array<{ id: string; name: string; role: string; avatar: string }>;
 }
 
-const SmartAnalytics: React.FC<SmartAnalyticsProps> = ({ onNotification, currentUser, teamMembers }) => {
+const SmartAnalytics: React.FC<SmartAnalyticsProps> = ({ departmentSlug, departmentName, onNotification, currentUser, teamMembers }) => {
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
   const [suggestions, setSuggestions] = useState<WorkloadSuggestion[]>([]);
   const [predictions, setPredictions] = useState<Prediction[]>([]);
@@ -186,7 +188,7 @@ const SmartAnalytics: React.FC<SmartAnalyticsProps> = ({ onNotification, current
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">Smart Analytics</h2>
+        <h2 className="text-2xl font-bold text-gray-900">{departmentName} - Smart Analytics</h2>
         <p className="text-gray-600">AI-powered insights, predictions, and workload optimization</p>
       </div>
 

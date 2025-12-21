@@ -212,7 +212,7 @@ const ErrorHandler: React.FC<ErrorHandlerProps> = ({ onNotification, currentUser
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center">
             <AlertTriangle className="h-6 w-6 mr-2 text-red-600" />
-            Slack Error Handler
+            {departmentName} - Errors
           </h1>
           <p className="text-gray-600 mt-1">Monitor and manage errors from Slack notifications and system alerts</p>
         </div>

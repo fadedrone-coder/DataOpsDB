@@ -19,8 +19,11 @@ interface SlackIssue {
 }
 
 interface IssueTrackerProps {
+  departmentSlug: string;
+  departmentName: string;
   onNotification: (message: string, type: 'info' | 'success' | 'warning' | 'error', from?: string) => void;
   currentUser: string;
+  teamMembers?: any[];
 }
 
 const EXTERNAL_USERS = [
@@ -77,7 +80,7 @@ const INITIAL_ISSUES: SlackIssue[] = [
   }
 ];
 
-const IssueTracker: React.FC<IssueTrackerProps> = ({ onNotification, currentUser }) => {
+const IssueTracker: React.FC<IssueTrackerProps> = ({ departmentSlug, departmentName, onNotification, currentUser, teamMembers }) => {
   const [issues, setIssues] = useState<SlackIssue[]>(INITIAL_ISSUES);
   const [filteredIssues, setFilteredIssues] = useState<SlackIssue[]>(INITIAL_ISSUES);
   const [searchTerm, setSearchTerm] = useState('');

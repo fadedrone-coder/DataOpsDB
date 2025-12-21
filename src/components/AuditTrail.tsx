@@ -15,12 +15,14 @@ interface AuditEntry {
 }
 
 interface AuditTrailProps {
+  departmentSlug: string;
+  departmentName: string;
   onNotification: (message: string, type: 'info' | 'success' | 'warning' | 'error') => void;
   currentUser: string;
   teamMembers: Array<{ id: string; name: string; role: string; avatar: string }>;
 }
 
-const AuditTrail: React.FC<AuditTrailProps> = ({ onNotification, currentUser, teamMembers }) => {
+const AuditTrail: React.FC<AuditTrailProps> = ({ departmentSlug, departmentName, onNotification, currentUser, teamMembers }) => {
   const [auditLogs, setAuditLogs] = useState<AuditEntry[]>([]);
   const [filteredLogs, setFilteredLogs] = useState<AuditEntry[]>([]);
   const [searchTerm, setSearchTerm] = useState('');

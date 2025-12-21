@@ -20,12 +20,14 @@ interface FirefliesRecording {
 }
 
 interface FirefliesIntegrationProps {
+  departmentSlug: string;
+  departmentName: string;
   onNotification: (message: string, type: 'info' | 'success' | 'warning' | 'error') => void;
   currentUser: string;
   teamMembers: Array<{ id: string; name: string; role: string; avatar: string }>;
 }
 
-const FirefliesIntegration: React.FC<FirefliesIntegrationProps> = ({ onNotification, currentUser, teamMembers }) => {
+const FirefliesIntegration: React.FC<FirefliesIntegrationProps> = ({ departmentSlug, departmentName, onNotification, currentUser, teamMembers }) => {
   const [recordings, setRecordings] = useState<FirefliesRecording[]>([]);
   const [selectedRecording, setSelectedRecording] = useState<FirefliesRecording | null>(null);
   const [isLoading, setIsLoading] = useState(false);
