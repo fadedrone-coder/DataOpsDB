@@ -131,38 +131,110 @@ function App() {
     }
   };
 
+  const navigationSections = [
+    {
+      title: 'Operations',
+      tabs: tabs.slice(0, 4),
+    },
+    {
+      title: 'Execution',
+      tabs: tabs.slice(4, 8),
+    },
+    {
+      title: 'Automation',
+      tabs: tabs.slice(8),
+    },
+  ];
+
+  const quickStats = [
+    {
+      label: 'Active specialists',
+      value: teamMembers.length,
+      trend: '+2 this month',
+    },
+    {
+      label: 'Open alerts',
+      value: notifications.length,
+      trend: '4 require review',
+    },
+    {
+      label: 'Workstreams',
+      value: tabs.length,
+      trend: 'Real-time sync',
+    },
+  ];
+
+  const overviewCards = [
+    {
+      title: 'Metrics health',
+      description: 'Review today’s throughput, coverage, and SLA posture.',
+      tabId: 'metrics',
+      action: 'Open metrics',
+    },
+    {
+      title: 'Execution queue',
+      description: 'Stay ahead of tasks, blockers, and in-flight requests.',
+      tabId: 'tasks',
+      action: 'Manage tasks',
+    },
+    {
+      title: 'Risk watch',
+      description: 'Investigate anomalies, errors, and claim escalations.',
+      tabId: 'errors',
+      action: 'Inspect risks',
+    },
+    {
+      title: 'Collaboration hub',
+      description: 'Track issues, meetings, and audit trails in one flow.',
+      tabId: 'issues',
+      action: 'Open hub',
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+      <header className="border-b border-slate-800/80 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
-              <div className="flex-shrink-0 flex items-center">
-                <img src="/curacel logo.jpeg" alt="Curacel" className="h-10 w-auto" />
-                <span className="ml-2 text-xl font-bold text-gray-900">Curacel DataOps</span>
+              <div className="flex items-center gap-3">
+                <img src="/curacel logo.jpeg" alt="Curacel" className="h-10 w-10 rounded-full bg-white/10 p-1" />
+                <div>
+                  <span className="block text-sm uppercase tracking-[0.2em] text-blue-300">
+                    Curacel
+                  </span>
+                  <span className="block text-xl font-semibold text-white">DataOps Control Center</span>
+                </div>
               </div>
             </div>
             <div className="flex items-center space-x-6">
+              <button
+                onClick={sendSlackSummary}
+                className="hidden items-center gap-2 rounded-full border border-blue-500/40 bg-blue-500/10 px-4 py-2 text-sm font-medium text-blue-100 transition hover:bg-blue-500/20 sm:flex"
+              >
+                <Bell className="h-4 w-4" />
+                Send daily summary
+              </button>
               <div className="relative">
-                <Bell className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer transition-colors" />
+                <Bell className="h-6 w-6 text-blue-200 hover:text-blue-100 cursor-pointer transition-colors" />
                 {notifications.length > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                     {notifications.length}
                   </span>
                 )}
               </div>
               <div className="flex items-center space-x-3">
-                <div className="flex items-center text-sm text-gray-700">
+                <div className="flex items-center text-sm text-slate-100">
                   <span className="text-lg mr-2">{currentUserData?.avatar}</span>
                   <div>
                     <div className="font-medium">{currentUserData?.name}</div>
-                    <div className="text-xs text-gray-500">{currentUserData?.role}</div>
+                    <div className="text-xs text-slate-400">{currentUserData?.role}</div>
                   </div>
                 </div>
                 <button
                   onClick={() => setCurrentUser(null)}
-                  className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                  className="text-sm text-slate-300 hover:text-white transition-colors"
                 >
                   Switch User
                 </button>
@@ -172,37 +244,98 @@ function App() {
         </div>
       </header>
 
-
-      <div className="flex h-screen bg-gray-50">
+      <div className="flex min-h-[calc(100vh-4rem)] bg-slate-950">
         {/* Sidebar Navigation */}
-        <nav className="w-64 bg-white shadow-sm border-r border-gray-200 flex flex-col">
-          <div className="p-4">
-            <h2 className="text-lg font-semibold text-gray-900">Navigation</h2>
+        <nav className="w-72 border-r border-slate-800/80 bg-slate-950/60 px-6 py-8">
+          <div className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-4 shadow-lg shadow-blue-500/10">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-semibold text-white">Mission Control</h2>
+                <p className="text-xs text-slate-400">Navigate every DataOps workstream</p>
+              </div>
+              <Target className="h-5 w-5 text-blue-400" />
+            </div>
+            <div className="mt-4 space-y-3">
+              {quickStats.map((stat) => (
+                <div key={stat.label} className="rounded-xl border border-slate-800/80 bg-slate-950/50 p-3">
+                  <div className="text-xs uppercase tracking-wide text-slate-400">{stat.label}</div>
+                  <div className="mt-1 flex items-center justify-between">
+                    <span className="text-xl font-semibold text-white">{stat.value}</span>
+                    <span className="text-xs text-blue-300">{stat.trend}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="flex-1 px-4 pb-4">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center px-4 py-3 mb-2 rounded-lg font-medium text-sm transition-colors ${
-                    activeTab === tab.id
-                      ? 'bg-blue-50 text-blue-600 border border-blue-200'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
-                >
-                  <Icon className="h-5 w-5 mr-3" />
-                  {tab.name}
-                </button>
-              );
-            })}
+
+          <div className="mt-8 space-y-6">
+            {navigationSections.map((section) => (
+              <div key={section.title}>
+                <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+                  {section.title}
+                </h3>
+                <div className="mt-3 space-y-2">
+                  {section.tabs.map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`w-full flex items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium transition-colors ${
+                          activeTab === tab.id
+                            ? 'bg-blue-500/15 text-blue-100 border border-blue-500/30'
+                            : 'text-slate-300 hover:bg-slate-900/70 hover:text-white'
+                        }`}
+                      >
+                        <Icon className="h-5 w-5" />
+                        {tab.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-auto">
-          <div className="p-8">
+        <main className="flex-1 overflow-auto bg-gradient-to-br from-slate-950 via-slate-900/40 to-slate-950">
+          <div className="mx-auto max-w-6xl px-6 py-10">
+            <div className="mb-8 flex flex-wrap items-start justify-between gap-6 rounded-3xl border border-blue-500/20 bg-gradient-to-r from-blue-500/10 via-slate-900/60 to-slate-900/80 p-6 shadow-xl shadow-blue-500/10">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.35em] text-blue-300">Realtime</p>
+                <h1 className="mt-2 text-3xl font-semibold text-white">Operations overview for today</h1>
+                <p className="mt-2 max-w-xl text-sm text-slate-300">
+                  Monitor throughput, surface risks, and orchestrate DataOps execution from a single command surface.
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <button className="rounded-full border border-slate-700/80 px-4 py-2 text-sm text-slate-200 transition hover:border-blue-400/60 hover:text-white">
+                  View activity log
+                </button>
+                <button className="rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition hover:bg-blue-400">
+                  Launch response plan
+                </button>
+              </div>
+            </div>
+            <div className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {overviewCards.map((card) => (
+                <div
+                  key={card.title}
+                  className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-lg shadow-slate-900/30"
+                >
+                  <h2 className="text-lg font-semibold text-white">{card.title}</h2>
+                  <p className="mt-2 text-sm text-slate-300">{card.description}</p>
+                  <button
+                    onClick={() => setActiveTab(card.tabId)}
+                    className="mt-4 inline-flex items-center gap-2 rounded-full border border-blue-500/40 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-blue-100 transition hover:bg-blue-500/20"
+                  >
+                    {card.action}
+                    <TrendingUp className="h-4 w-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
             {renderActiveTab()}
           </div>
         </main>
