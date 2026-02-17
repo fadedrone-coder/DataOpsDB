@@ -6,12 +6,12 @@ import ApprovalDashboard from './hub/ApprovalDashboard';
 import ExcelOKRUpload from './hub/ExcelOKRUpload';
 import DepartmentMetrics from './components/DepartmentMetrics';
 import TaskManagement from './components/TaskManagement';
-import ErrorHandler from './components/ErrorHandler';
+import DepartmentErrors from './components/DepartmentErrors';
 import Notifications from './components/Notifications';
-import IssueTracker from './components/IssueTracker';
-import ClaimsAnalysis from './components/ClaimsAnalysis';
+import DepartmentIssues from './components/DepartmentIssues';
+import DepartmentClaims from './components/DepartmentClaims';
 import TeamAnalytics from './components/TeamAnalytics';
-import GoalTracking from './components/GoalTracking';
+import DepartmentGoals from './components/DepartmentGoals';
 import FirefliesIntegration from './components/FirefliesIntegration';
 import AuditTrail from './components/AuditTrail';
 import SmartAnalytics from './components/SmartAnalytics';
@@ -360,7 +360,7 @@ const HubApp: React.FC = () => {
       case 'metrics':
         return <DepartmentMetrics departmentSlug={selectedDepartment.slug} metricTypes={selectedDepartment.metric_types} onNotification={addNotification} />;
       case 'goals':
-        return <GoalTracking onNotification={addNotification} currentUser={currentUserId} teamMembers={TEAM_MEMBERS} />;
+        return <DepartmentGoals departmentSlug={selectedDepartment.slug} departmentName={selectedDepartment.name} onNotification={addNotification} />;
       case 'analytics':
         return <TeamAnalytics onNotification={addNotification} currentUser={currentUserId} teamMembers={TEAM_MEMBERS} />;
       case 'smart':
@@ -368,11 +368,11 @@ const HubApp: React.FC = () => {
       case 'tasks':
         return <TaskManagement onNotification={addNotification} currentUser={currentUserId} teamMembers={TEAM_MEMBERS} />;
       case 'errors':
-        return <ErrorHandler onNotification={addNotification} currentUser={currentUserId} teamMembers={TEAM_MEMBERS} />;
+        return <DepartmentErrors departmentSlug={selectedDepartment.slug} departmentName={selectedDepartment.name} onNotification={addNotification} />;
       case 'claims':
-        return <ClaimsAnalysis onNotification={addNotification} currentUser={currentUserId} teamMembers={TEAM_MEMBERS} />;
+        return <DepartmentClaims departmentSlug={selectedDepartment.slug} departmentName={selectedDepartment.name} onNotification={addNotification} />;
       case 'issues':
-        return <IssueTracker onNotification={addNotification} currentUser={currentUserId} teamMembers={TEAM_MEMBERS} />;
+        return <DepartmentIssues departmentSlug={selectedDepartment.slug} departmentName={selectedDepartment.name} onNotification={addNotification} />;
       case 'fireflies':
         return <FirefliesIntegration onNotification={addNotification} currentUser={currentUserId} teamMembers={TEAM_MEMBERS} />;
       case 'calendar':
